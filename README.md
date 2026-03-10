@@ -2,7 +2,7 @@
 
 Browse your ChatGPT and Claude exported conversations — locally, privately, instantly.
 
-Two standalone HTML files, one for each platform. No installation. No server.
+Four standalone HTML files, two platforms × two languages. No installation. No server.
 Open the file in your browser, load your export, done.
 
 ## Features
@@ -24,13 +24,13 @@ Runs entirely in your browser. Your data never leaves your device.
 **ChatGPT**
 1. Go to Settings → Data Controls → Export Data
 2. Download and unzip — find `conversations.json`
-3. Open `chatgpt-viewer-zh.html` in your browser
+3. Open `chatgpt-viewer-zh.html` or `chatgpt-viewer-en.html` in your browser
 4. Load the JSON file
 
 **Claude**
 1. Go to Settings → Privacy → Export Data
 2. Download and unzip — find `conversations.json`
-3. Open `claude-viewer-zh.html` in your browser
+3. Open `claude-viewer-zh.html` or `claude-viewer-en.html` in your browser
 4. Load the JSON file
 
 ## Credits
