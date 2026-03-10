@@ -2,29 +2,29 @@
   Chat Export Viewer v4.5 - Cool Features Edition
   Created by Dan & Pet with 🖤
   Last updated: 2025-10-25
-  
-  功能特性：
-  - 📁 功能导航
-  - 🔍 关键词搜索/跳转
-  - ⭐ 收藏会话和消息
-  - ☁️ 词频分析（中英文）
-  - 🎨 多主题切换
-  - 📊 侧边栏可拖拽/隐藏
-  - 🕤 时间戳开关
-  
-  本工具完全在浏览器本地运行，不联网，不上传数据。
 
-  声明
-  - 本工具是个人自制小工具，完全免费开源。作者非专业开发，不以任何形式通过此工具盈利，仅希望能帮助有需要的人。
-  - 如需进阶定制，欢迎技术人员自行tweak。
+  Features:
+  - 📁 Feature navigation
+  - 🔍 Keyword search/jump
+  - ⭐ Favorite conversations and messages
+  - ☁️ Word-frequency analysis (Chinese & English)
+  - 🎨 Theme switching
+  - 📊 Draggable/hideable sidebar
+  - 🕤 Timestamp toggle
+
+  This tool runs entirely in your browser locally, with no network access and no data uploads.
+
+  Notes
+  - This is a personal utility, fully free and open-source. The author is not a professional developer and does not profit from this tool in any form; it is made only to help people who need it.
+  - For advanced customization, developers are welcome to tweak it themselves.
 -->
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ChatGPT 导出记录阅览器（v4.5）</title>
+<title>ChatGPT Export Viewer (v4.5)</title>
 <style>
   :root{
     --bg:#f7f8fb; --panel:#ffffff; --ink:#0b1220; --muted:#667085;
@@ -159,25 +159,25 @@
 </head>
 <body>
 <header>
-  <button id="toggleSidebar" class="iconbtn" title="隐藏侧边栏" aria-label="Toggle sidebar">☰</button>
-  <h1 id="title">ChatGPT 导出记录阅览器</h1>
+  <button id="toggleSidebar" class="iconbtn" title="Hide sidebar" aria-label="Toggle sidebar">☰</button>
+  <h1 id="title">ChatGPT Export Viewer</h1>
   <div class="tabbar">
-    <button class="tab active" id="tab-browse">浏览</button>
-    <button class="tab" id="tab-tools">工具</button>
-    <button class="tab" id="tab-favs">收藏 <span class="count" id="favCount">0</span></button>
+    <button class="tab active" id="tab-browse">Browse</button>
+    <button class="tab" id="tab-tools">Tools</button>
+    <button class="tab" id="tab-favs">Favorites <span class="count" id="favCount">0</span></button>
   </div>
-  <span class="badge" id="status">未载入</span>
-  <label class="btn" for="file">载入</label>
+  <span class="badge" id="status">Not loaded</span>
+  <label class="btn" for="file">Load</label>
   <input id="file" type="file" accept=".json" />
   <div class="search" id="searchBar">
-    <input id="q" type="search" placeholder="搜索标题或正文..." disabled maxlength="40" />
-    <button id="prevHit" class="iconbtn" title="上一条命中（Shift + Enter）" disabled>⇤</button>
-    <button id="nextHit" class="iconbtn" title="下一条命中（Enter）" disabled>⇥</button>
+    <input id="q" type="search" placeholder="Search titles or content..." disabled maxlength="40" />
+    <button id="prevHit" class="iconbtn" title="Previous match (Shift + Enter)" disabled>⇤</button>
+    <button id="nextHit" class="iconbtn" title="Next match (Enter)" disabled>⇥</button>
     <span class="result" id="result"></span>
   </div>
  <div class="scoped-filters" id="scopedFilters">
-    <label class="toggle"><input type="checkbox" id="flt-user" checked /> 只看用户</label>
-    <label class="toggle"><input type="checkbox" id="flt-assistant" checked /> 只看 G 老师</label>
+    <label class="toggle"><input type="checkbox" id="flt-user" checked /> User only</label>
+    <label class="toggle"><input type="checkbox" id="flt-assistant" checked /> Assistant only</label>
   </div>
 </header>
 
@@ -185,26 +185,26 @@
   <aside class="left">
     <div class="list" id="list"></div>
   </aside>
-  <div class="resizer" id="resizer" title="拖拽调整侧边栏宽度"></div>
+  <div class="resizer" id="resizer" title="Drag to resize sidebar"></div>
   <main class="right">
     <div class="pane active" id="pane-browse">
       <div class="view" id="view">
         <div class="welcome">
-          <p><b>欢迎使用🎉 ChatGPT 导出记录阅览器 🎉。</b></p>
-          <p>载入从 <code>chat.openai.com</code> 导出的 <code style="color:#e53935; font-weight:bold">conversations.json</code> 文件，就能在本地舒舒服服翻聊天记录啦~</p>
-          <h3 style="margin:2rem 0 .25rem">Cool Features Edition（v4.5）版本功能：</h3>
+          <p><b>Welcome 🎉 ChatGPT Export Viewer 🎉。</b></p>
+          <p>Load the <code style="color:#e53935; font-weight:bold">conversations.json</code> file exported from <code>chat.openai.com</code> to comfortably browse your chat history locally.</p>
+          <h3 style="margin:2rem 0 .25rem">Cool Features Edition (v4.5) highlights:</h3>
           <ul style="margin:.5rem 0 0 1.1rem; padding:0; line-height:1.6">
-              <li>🗂️ <b>新增导航标签</b>：便捷切换对应面板，自定义名称随时可编辑</li>
-              <li>🔍 <b>更好的搜索功能</b>：全文/标题都能搜，用 ← → 按钮快速跳转到原文（快捷键 Shift + Enter / Enter）</li>
-              <li>⭐ <b>收藏夹</b>：可收藏整个会话或单条消息；在收藏页点击可跳回原文</li>
-              <li>☁️ <b>词频分析</b>：中/英文/混合词频统计，选当前会话 or 全部记录，生成词云+词频表（点词直接搜）</li>
-              <li>🕓 <b>消息时间戳开关</b>：默认关闭，可在「工具」标签页打开</li>
-              <li>🧭 <b>界面改进</b>：侧边栏可折叠（快捷键 S 键），支持拖拽调宽；深/浅色与气泡配色联动</li>
-              <li>⚡ <b>性能优化</b>：自动加载上次缓存；使用 IndexedDB 本地缓存让大文件载入更快</li>
+              <li>🗂️ <b>Navigation tabs</b>：Switch between panels quickly, and edit custom names anytime</li>
+              <li>🔍 <b>Enhanced search</b>：Search full text or titles, and jump quickly with ←/→ (Shift + Enter / Enter)</li>
+              <li>⭐ <b>Favorites</b>：Favorite entire conversations or individual messages; click to jump back</li>
+              <li>☁️ <b>Word frequency analysis</b>：Analyze Chinese/English/mixed frequencies for current conversation or all records; generate a word cloud + frequency table (click a word to search)</li>
+              <li>🕓 <b>Message timestamp toggle</b>：Off by default; enable it in the "Tools" tab</li>
+              <li>🧭 <b>UI improvements</b>：Collapsible sidebar (S key), draggable width, and linked light/dark + bubble palettes</li>
+              <li>⚡ <b>Performance optimizations</b>：Auto-load last cache and use local IndexedDB caching for faster large-file loading</li>
           </ul>
-          <h3 style="margin:1.5rem 0 .25rem">关于数据安全</h3>
+          <h3 style="margin:1.5rem 0 .25rem">About data security</h3>
           <p style="margin:.25rem 0 0; padding:0; line-height:1.6">
-            本工具完全在<b>你的浏览器本地运行</b>。不联网，不上传。你的聊天记录只属于你。
+            This tool runs entirely <b>locally in your browser</b>. No network, no uploads. Your chats belong only to you.
           </p>
         </div>
       </div>
@@ -212,82 +212,82 @@
 
     <div class="pane" id="pane-tools">
       <div class="card">
-        <h3>名称设置</h3>
+        <h3>Name settings</h3>
         <div class="kv">
-          <label>Assistant 名称 <input id="t-assistant-name" class="select" value="" maxlength="12"></label>
-          <label>User 名称 <input id="t-user-name" class="select" value="" maxlength="12"></label>
-          <label>标题名称 <input id="t-project-title" class="select" value="" maxlength="22"></label>
+          <label>Assistant name <input id="t-assistant-name" class="select" value="" maxlength="12"></label>
+          <label>User name <input id="t-user-name" class="select" value="" maxlength="12"></label>
+          <label>Title name <input id="t-project-title" class="select" value="" maxlength="22"></label>
         </div>
       </div>
 
       <div class="card">
-        <h3>外观与偏好</h3>
+        <h3>Appearance & preferences</h3>
         <div class="kv">
-          <label class="toggle"><input type="checkbox" id="t-compact" /> 紧凑模式</label>
-          <label class="toggle"><input type="checkbox" id="t-dark" /> 深色模式</label>
+          <label class="toggle"><input type="checkbox" id="t-compact" /> Compact mode</label>
+          <label class="toggle"><input type="checkbox" id="t-dark" /> Dark mode</label>
           <label>
             <select id="t-palette" class="select">
-              <option value="blue">蓝</option>
-              <option value="green">绿</option>
-              <option value="purple">紫</option>
-              <option value="peach">桃</option>
-              <option value="gray">灰</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="purple">Purple</option>
+              <option value="peach">Peach</option>
+              <option value="gray">Gray</option>
             </select>
           </label>
-          <label class="toggle"><input type="checkbox" id="t-show-ts" /> 显示消息时间戳</label>
-          <label class="toggle"><input type="checkbox" id="t-show-model" /> 显示模型</label>
+          <label class="toggle"><input type="checkbox" id="t-show-ts" /> Show message timestamps</label>
+          <label class="toggle"><input type="checkbox" id="t-show-model" /> Show model</label>
         </div>
       </div>
 
       <div class="card">
-        <h3>词频统计</h3>
+        <h3>Word frequency</h3>
         <div class="kv">
-          <label>范围
+          <label>Scope
             <select id="wf-scope" class="select">
-              <option value="current">当前会话</option>
-              <option value="all">全部会话（受搜索过滤）</option>
+              <option value="current">Current conversation</option>
+              <option value="all">All conversations (filtered by search)</option>
             </select>
           </label>
-          <label>数量
+          <label>Count
             <select id="wf-k" class="select">
               <option>20</option><option selected>50</option><option>100</option>
             </select>
           </label>
-          <label class="toggle"><input type="checkbox" id="wf-include-user" checked /> <span id="wf-user-label">我的发言</span></label>
-          <label class="toggle"><input type="checkbox" id="wf-include-assistant" checked /> <span id="wf-assistant-label">G 老师的发言</span></label>
+          <label class="toggle"><input type="checkbox" id="wf-include-user" checked /> <span id="wf-user-label">My messages</span></label>
+          <label class="toggle"><input type="checkbox" id="wf-include-assistant" checked /> <span id="wf-assistant-label">Assistant messages</span></label>
 
-          <label style="margin-left: 7px;">语言
+          <label style="margin-left: 7px;">Language
             <select id="wf-lang" class="select">
-              <option value="auto">混合</option>
-              <option value="zh">中文</option>
-              <option value="en">英文</option>
+              <option value="auto">Mixed</option>
+              <option value="zh">Chinese</option>
+              <option value="en">English</option>
             </select>
           </label>
-          <button class="btn" id="wf-run">生成词频</button>
+          <button class="btn" id="wf-run">Generate frequencies</button>
         </div>
         <div id="wf-cloud" class="cloud"></div>
-        <div id="wf-result" style="margin-top:8px; font-size:13px; color:var(--muted)">选择范围（若选「当前会话」，请在侧边栏点选会话）与数量，然后点击「生成词频」。</div>
+        <div id="wf-result" style="margin-top:8px; font-size:13px; color:var(--muted)">Choose scope (if "Current conversation", please select a conversation in the sidebar) and count, then click "Generate frequencies".</div>
       </div>
 
       <div class="card">
-        <h3>文件工具</h3>
+        <h3>File tools</h3>
         <div class="kv">
-          <button class="btn" id="btn-slim" title="清理冗余字段（如图片、工具引用）">精简 JSON 文件</button>
+          <button class="btn" id="btn-slim" title="Remove redundant fields (e.g., image/tool references)">Slim JSON file</button>
         </div>
         <div style="margin-top:8px; font-size:13px; color:var(--muted)">
-          移除图片引用、工具引用等冗余数据，减小文件体积。
-          若精简后仍过大，建议按时间段切分文件或删除不需要的对话。
+          Remove redundant data such as image and tool references to reduce file size.
+          If the file is still too large after slimming, split it by time range or remove unnecessary conversations.
         </div>
       </div>
-    </div> 
+    </div>
 
     <div class="pane" id="pane-favs">
       <div class="card">
-        <h3>收藏的会话</h3>
+        <h3>Favorited conversations</h3>
         <div id="favConvs"></div>
       </div>
       <div class="card">
-        <h3>收藏的消息</h3>
+        <h3>Favorited messages</h3>
         <div id="favMsgs"></div>
       </div>
     </div>
@@ -301,8 +301,8 @@
 
 <!-- Names editor (only visible before load) -->
 <div class="names" id="namesBox" style="position:fixed; left:12px; top:calc(var(--header-h) + 8px); z-index:60; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:8px 10px; box-shadow:0 6px 18px rgba(0,0,0,.08)">
-  <label>Assistant 名称：<input id="assistantName" value="G 老师" /></label>
-  <label>User 名称：<input id="userName" value="用户" /></label>
+  <label>Assistant name：<input id="assistantName" value="Assistant" /></label>
+  <label>User name：<input id="userName" value="User" /></label>
 </div>
 
 <script>
@@ -341,7 +341,7 @@ function hideNamesBox(){
     if(toolAssistant) toolAssistant.value = names.assistant;
     if(toolUser) toolUser.value = names.user;
   }
-  
+
   let commitTimer = null;
   function commit(){
     if(commitTimer) clearTimeout(commitTimer);
@@ -350,7 +350,7 @@ function hideNamesBox(){
       if(activeElement === topAssistant || activeElement === toolAssistant) {
         const inputValue = activeElement.value;
         names.assistant = processName(inputValue, 'ChatGPT', 12);
-      }  
+      }
       if(activeElement === topUser || activeElement === toolUser) {
         const inputValue = activeElement.value;
         names.user = processName(inputValue, 'User', 12);
@@ -361,7 +361,7 @@ function hideNamesBox(){
       renderList();
     }, 300);
   }
-  
+
   const allInputs = [topAssistant, topUser, toolAssistant, toolUser].filter(Boolean);
   for(const input of allInputs){
     if(input){
@@ -387,9 +387,9 @@ function hideNamesBox(){
 let conversations = [];
 let selectedId = null;
 let index = [];
-let names = { assistant: 'G 老师', user: '用户', projectTitle: '' };
+let names = { assistant: 'Assistant', user: 'User', projectTitle: '' };
 let favConvs = new Set(JSON.parse(localStorage.getItem('viewer.favConvs') || '[]'));
-let favMsgsArr = JSON.parse(localStorage.getItem('viewer.favMsgs') || '[]'); 
+let favMsgsArr = JSON.parse(localStorage.getItem('viewer.favMsgs') || '[]');
 let favMsgsSet = new Set(favMsgsArr.map(x=>x.id));
 let showTimestamps = (localStorage.getItem('viewer.showTs') === '1');
 let searchCycle = { convId: null, word: '', nodes: [], idx: -1 };
@@ -400,7 +400,7 @@ const idb = {
   db: null,
   open(){
     if (!window.indexedDB) {
-       console.warn('当前浏览器不支持 IndexedDB');
+       console.warn('IndexedDB is not supported in this browser');
        return Promise.resolve();
      }
     return new Promise((resolve, reject)=>{
@@ -434,20 +434,20 @@ const tabBrowse = $('#tab-browse'), tabTools = $('#tab-tools'), tabFavs = $('#ta
 function setTab(which){
   for(const el of $$('.pane')) el.classList.remove('active');
   for(const el of $$('.tab')) el.classList.remove('active');
-  
-  if(which==='tools'){ 
-    paneTools.classList.add('active'); 
+
+  if(which==='tools'){
+    paneTools.classList.add('active');
     tabTools.classList.add('active');
     document.body.classList.remove('sidebar-collapsed');
   }
-  else if(which==='favs'){ 
-    paneFavs.classList.add('active'); 
-    tabFavs.classList.add('active'); 
-    renderFavs(); 
+  else if(which==='favs'){
+    paneFavs.classList.add('active');
+    tabFavs.classList.add('active');
+    renderFavs();
   }
-  else { 
-    paneBrowse.classList.add('active'); 
-    tabBrowse.classList.add('active'); 
+  else {
+    paneBrowse.classList.add('active');
+    tabBrowse.classList.add('active');
     if (selectedId) {
       const c = conversations.find(x => x.id === selectedId);
       if (c) renderThread(c);
@@ -473,32 +473,32 @@ function highlight(text, q) {
     if (!q) return escapeHTML(text);
 
     const span = document.createElement('span');
-    
+
     if (isAsciiWordQuery(q)) {
         const re = buildWordRegex(q);
         if (!re) {
             span.textContent = text;
             return span.innerHTML;
         }
-        
+
         const reG = new RegExp(re.source, 'ig');
         let lastIndex = 0;
         let match;
-        
+
         while ((match = reG.exec(text)) !== null) {
             if (match.index > lastIndex) {
                 const textNode = document.createTextNode(text.slice(lastIndex, match.index));
                 span.appendChild(textNode);
             }
-            
+
             const highlightSpan = document.createElement('span');
             highlightSpan.className = 'hl';
             highlightSpan.textContent = match[0];
             span.appendChild(highlightSpan);
-            
+
             lastIndex = match.index + match[0].length;
         }
-        
+
         if (lastIndex < text.length) {
             const textNode = document.createTextNode(text.slice(lastIndex));
             span.appendChild(textNode);
@@ -507,7 +507,7 @@ function highlight(text, q) {
         const lowerText = text.toLowerCase();
         const qLower = q.toLowerCase();
         const index = lowerText.indexOf(qLower);
-        
+
         if (index === -1) {
             span.textContent = text;
         } else {
@@ -515,19 +515,19 @@ function highlight(text, q) {
                 const before = document.createTextNode(text.slice(0, index));
                 span.appendChild(before);
             }
-            
+
             const highlightSpan = document.createElement('span');
             highlightSpan.className = 'hl';
             highlightSpan.textContent = text.slice(index, index + q.length);
             span.appendChild(highlightSpan);
-            
+
             if (index + q.length < text.length) {
                 const after = document.createTextNode(text.slice(index + q.length));
                 span.appendChild(after);
             }
         }
     }
-    
+
     return span.innerHTML;
 }
 
@@ -604,15 +604,15 @@ function getSnippet(text, q, len = 120){
 
 /* ---- Names persistence ---- */
 function loadNames(){
-  try{ 
+  try{
     const saved = JSON.parse(localStorage.getItem('viewer.names') || 'null');
-    if(saved && typeof saved === 'object'){ 
+    if(saved && typeof saved === 'object'){
       names.assistant = String(saved.assistant || '').slice(0, 12);
       names.user = String(saved.user || '').slice(0, 12);
       names.projectTitle = String(saved.projectTitle || '').slice(0, 22);
     }
   }catch{}
-  
+
   const inputs = [
     document.getElementById('assistantName'),
     document.getElementById('userName'),
@@ -625,7 +625,7 @@ function loadNames(){
   if(inputs[2]) inputs[2].value = names.assistant;
   if(inputs[3]) inputs[3].value = names.user;
   if(inputs[4]) inputs[4].value = names.projectTitle || '';
-  
+
   applyNames();
 }
 
@@ -633,9 +633,9 @@ function saveNames(){ localStorage.setItem('viewer.names', JSON.stringify(names)
 function applyNames(){
   const customTitle = (names.projectTitle && names.projectTitle.trim())
     ? names.projectTitle
-    : '聊天记录阅览器';
+    : 'Chat viewer';
   $('#title').textContent = customTitle;
-  document.title = 'ChatGPT 记录阅览';
+  document.title = 'ChatGPT Viewer';
 
   const toolTitle = document.getElementById('t-project-title');
   if (toolTitle) {
@@ -644,21 +644,21 @@ function applyNames(){
 
   const displayUser = names.user === '' ? 'User' : names.user;
   const displayAssistant = names.assistant === '' ? 'ChatGPT' : names.assistant;
-  
+
   const sf = $('#scopedFilters');
   if (sf && sf.children.length >= 2) {
-    sf.children[0].lastChild.textContent = '显示'+displayUser;
-    sf.children[1].lastChild.textContent = '显示'+displayAssistant;
+    sf.children[0].lastChild.textContent = 'Show '+displayUser;
+    sf.children[1].lastChild.textContent = 'Show '+displayAssistant;
   }
 
   const wfUserLabel = $('#wf-user-label');
   const wfAssistLabel = $('#wf-assistant-label');
-  if (wfUserLabel) wfUserLabel.textContent = displayUser + '的发言';
-  if (wfAssistLabel) wfAssistLabel.textContent = displayAssistant + '的发言';
+  if (wfUserLabel) wfUserLabel.textContent = displayUser + "'s messages";
+  if (wfAssistLabel) wfAssistLabel.textContent = displayAssistant + "'s messages";
 
-  if(selectedId){ 
-    const c = conversations.find(x=>x.id===selectedId); 
-    if(c) renderThread(c); 
+  if(selectedId){
+    const c = conversations.find(x=>x.id===selectedId);
+    if(c) renderThread(c);
   }
 }
 
@@ -669,7 +669,7 @@ function applyNames(){
   let titleTimer = null;
   function commit(){
     if(titleTimer) clearTimeout(titleTimer);
-    
+
     titleTimer = setTimeout(() => {
       names.projectTitle = toolTitle.value.trim().slice(0, 22);
       saveNames();
@@ -708,7 +708,7 @@ function applyNames(){
   if (box) box.addEventListener('change', commit);
 })();
 
-// === 工具页：显示模型 ===
+// === 工具页：Show model ===
 (function wireShowModel(){
   const box = document.getElementById('t-show-model');
   if (!box) return;
@@ -738,7 +738,7 @@ const THEME_PALETTES = {
   gray:   { light:{dan:'#f6f7f9', pet:'#f3f4f7', accent:'#64748b'}, dark:{dan:'#171923', pet:'#1b1e29', accent:'#94a3b8'} }
 };
 
-// === 工具页：外观与偏好 ===
+// === 工具页：Appearance & preferences ===
 (function wireToolsAppearance(){
   const c = document.getElementById('t-compact');
   const d = document.getElementById('t-dark');
@@ -772,19 +772,19 @@ fileInput.addEventListener('change', async (e) => {
 
   // 硬上限：直接拒绝
   if (f.size >= HARD_LIMIT) {
-    alert(`⚠️ 文件过大（${sizeMB} MB），可能导致浏览器卡死或崩溃。\n\n请先用「工具」tab 底部的「精简JSON文件」尝试缩小文件再加载。\n\n若精简后仍过大，建议按时间段切分文件或删除不需要的对话。本工具能力有限，敬请见谅`);
-    $('#status').textContent = '已取消加载';
-    e.target.value = ''; 
+    alert(`⚠️ File is too large（${sizeMB} MB），This may freeze or crash your browser.\n\nPlease use "Slim JSON file" at the bottom of the "Tools" tab first, then load again.\n\nIf the file is still too large after slimming, split it by time range or remove unnecessary conversations.This tool has limitations; thank you for understanding.`);
+    $('#status').textContent = 'Load canceled';
+    e.target.value = '';
     return;
   }
 
   // 警告区间：强烈建议精简
   if (f.size >= WARN_LIMIT) {
     const ok = confirm(
-      `⚠️ 大文件（${sizeMB} MB）。\n强烈建议先使用「工具」tab 底部的「精简JSON文件」。\n加载可能需要较长时间，且有卡顿风险。\n是否仍要直接加载？`
+      `⚠️ Large file（${sizeMB} MB）。\nStrongly recommended: use "Slim JSON file" in the "Tools" tab first.\nLoading may take a long time and may lag.\nDo you still want to load directly?`
     );
     if (!ok) {
-      $('#status').textContent = '已取消加载';
+      $('#status').textContent = 'Load canceled';
       e.target.value = '';
       return;
     }
@@ -793,34 +793,34 @@ fileInput.addEventListener('change', async (e) => {
   // 软提醒区间：温和提示
   if (f.size >= SOFT_LIMIT) {
     const ok = confirm(
-      `💡 文件较大（${sizeMB} MB）。\n建议先使用「工具」tab 底部的「精简JSON文件」功能，可加快加载速度。\n是否继续加载？`
+      `💡 File is large（${sizeMB} MB）。\nSuggestion: use "Slim JSON file" in the "Tools" tab first for faster loading.\nContinue loading?`
     );
     if (!ok) {
-      $('#status').textContent = '已取消加载';
+      $('#status').textContent = 'Load canceled';
       e.target.value = '';
       return;
     }
   }
 
-  $('#status').textContent = `加载中（${sizeMB}MB）...`;
-  
+  $('#status').textContent = `Loading（${sizeMB}MB）...`;
+
   try {
     const text = await f.text();
     await loadJSON(text, f.name);
   } catch (error) {
-    $('#status').textContent = '加载失败：' + error.message;
-    console.error('文件加载错误：', error);
+    $('#status').textContent = 'Load failed: ' + error.message;
+    console.error('File loading error: ', error);
   }
 });
 
 async function loadJSON(text, source='file'){
   try{
     const trimmed = text.trim();
-    
-    if(!trimmed) throw new Error('空文件');
-    
+
+    if(!trimmed) throw new Error('Empty file');
+
     let data = null;
-    
+
     if(trimmed.indexOf('\n') > 0 && trimmed.split('\n').every(l => !l.trim() || l.trim().startsWith('{'))){
       data = trimmed.split('\n').filter(Boolean).map(l => JSON.parse(l));
     } else {
@@ -829,11 +829,11 @@ async function loadJSON(text, source='file'){
 
     const convs = normalizeExport(data);
     conversations = convs;
-    index = conversations.map(c => ({ 
-      id: c.id, 
-      title: c.title || '(无标题)', 
-      date: bestDateMs(c, c.messages), 
-      text: (c.messages || []).map(m => m.text).join('\n') 
+    index = conversations.map(c => ({
+      id: c.id,
+      title: c.title || '(Untitled)',
+      date: bestDateMs(c, c.messages),
+      text: (c.messages || []).map(m => m.text).join('\n')
     }));
 
     try{
@@ -841,27 +841,27 @@ async function loadJSON(text, source='file'){
       await idb.set('lastExport', text);
       localStorage.setItem('viewer.lastExport', text);
     } catch(e) {
-      console.warn('缓存保存失败：', e);
+      console.warn('Failed to save cache: ', e);
     }
-    
-    const fromCache = (source === '缓存' || source === 'cache' || source === 'cached');
-    $('#status').textContent = fromCache ? '已从缓存载入' : '已载入';
+
+    const fromCache = (source === 'cache' || source === 'cache' || source === 'cached');
+    $('#status').textContent = fromCache ? 'Loaded from cache' : 'Loaded';
 
     $('#q').disabled = false;
     renderList();
     loadNames();
-    
+
     if(conversations.length){
       selectConv(conversations[0].id);
       setTab('browse');
     }
-    
-    updateSearchButtons(); 
+
+    updateSearchButtons();
     hideNamesBox();
-    
+
   } catch(e){
-    $('#status').textContent = '载入失败：' + (e?.message || e);
-    console.error('JSON 解析错误：', e);
+    $('#status').textContent = 'Load failed: ' + (e?.message || e);
+    console.error('JSON parse error: ', e);
   }
 }
 
@@ -871,12 +871,12 @@ async function loadJSON(text, source='file'){
     await idb.open();
     const cache = await idb.get('lastExport');
     if(cache){
-      await loadJSON(cache, '缓存');
+      await loadJSON(cache, 'cache');
       return;
     }
     const ls = localStorage.getItem('viewer.lastExport');
     if(ls){
-      await loadJSON(ls, '缓存');
+      await loadJSON(ls, 'cache');
     }
   }catch(e){
     console.warn('Auto-load skipped', e);
@@ -894,25 +894,25 @@ function slimRawJson(text) {
 
     function clean(obj) {
       if (!obj || typeof obj !== "object") return;
-      
+
       if (obj.metadata && typeof obj.metadata === 'object') {
         const preservedFields = {};
         if (obj.metadata.model_slug) preservedFields.model_slug = obj.metadata.model_slug;
         if (obj.metadata.model) preservedFields.model = obj.metadata.model;
-        
+
         if (Object.keys(preservedFields).length > 0) {
           obj.metadata = preservedFields;
         } else {
           delete obj.metadata;
         }
       }
-      
+
       for (const key of FIELD_BLACKLIST) {
         if (key in obj && key !== 'metadata') {
           delete obj[key];
         }
       }
-      
+
       for (const k in obj) {
         if (k !== 'metadata' && typeof obj[k] === 'object') {
           clean(obj[k]);
@@ -923,7 +923,7 @@ function slimRawJson(text) {
     clean(raw);
     return JSON.stringify(raw, null, 2);
   } catch (e) {
-    alert("精简失败：原始 JSON 无法解析");
+    alert("Slimming failed: unable to parse original JSON");
     return null;
   }
 }
@@ -932,19 +932,19 @@ document.getElementById("btn-slim").addEventListener("click", () => {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.json';
-  
+
   input.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     try {
       const btn = document.getElementById("btn-slim");
       const originalText = btn.textContent;
       btn.disabled = true;
-      btn.textContent = '处理中...';
-      
+      btn.textContent = 'Processing...';
+
       const rawText = await file.text();
-      
+
       const slimmed = slimRawJson(rawText);
       if (!slimmed) {
         btn.disabled = false;
@@ -958,21 +958,21 @@ document.getElementById("btn-slim").addEventListener("click", () => {
       a.href = url;
       const originalName = file.name.replace(/\.json$/i, '');
       a.download = `${originalName}_slimmed.json`;
-      
+
       a.click();
       URL.revokeObjectURL(url);
       btn.disabled = false;
       btn.textContent = originalText;
-      
-      alert(`精简完成！\n原文件: ${(file.size / 1024 / 1024).toFixed(2)} MB\n精简后: ${(blob.size / 1024 / 1024).toFixed(2)} MB`);
-      
+
+      alert(`Slimming complete!\nOriginal: ${(file.size / 1024 / 1024).toFixed(2)} MB\nSlimmed: ${(blob.size / 1024 / 1024).toFixed(2)} MB`);
+
     } catch (error) {
-      console.error("精简失败：", error);
-      alert("精简失败：" + error.message);
-      
+      console.error("Slimming failed: ", error);
+      alert("Slimming failed: " + error.message);
+
       const btn = document.getElementById("btn-slim");
       btn.disabled = false;
-      btn.textContent = '精简 JSON 文件';
+      btn.textContent = 'Slim JSON file';
     }
   });
   input.click();
@@ -1021,7 +1021,7 @@ function renderFavs(){
 
   const convIds = Array.from(favConvs);
   if(!convIds.length){
-    favConvsBox.innerHTML = '<div class="mono">还没有收藏会话</div>';
+    favConvsBox.innerHTML = '<div class="mono">No favorited conversations yet</div>';
   }else{
     for(const id of convIds){
       const c = conversations.find(x=>x.id===id);
@@ -1029,34 +1029,34 @@ function renderFavs(){
       const div = document.createElement('div');
       div.className = 'conv';
       div.innerHTML = `
-        <div class="title">${escapeHTML(c.title||'(无标题)')}</div>
+        <div class="title">${escapeHTML(c.title||'(Untitled)')}</div>
         <div class="meta"><span class="datepill">${fmtDate(bestDateMs(c,c.messages))||''}</span></div>
-        <span class="fav active" title="取消收藏">★</span>
+        <span class="fav active" title="Remove favorite">★</span>
       `;
       div.querySelector('.fav').addEventListener('click', (e)=>{ e.stopPropagation(); toggleFavConv(id); renderFavs(); });
-      div.addEventListener('click', ()=>{ 
-        selectConv(id, { forceRender: true }); 
-        setTab('browse'); 
-        const v=$('#view'); 
-        if(v) v.scrollTop=0; 
+      div.addEventListener('click', ()=>{
+        selectConv(id, { forceRender: true });
+        setTab('browse');
+        const v=$('#view');
+        if(v) v.scrollTop=0;
       });
       favConvsBox.appendChild(div);
     }
   }
 
   if(!favMsgsArr.length){
-    favMsgsBox.innerHTML = '<div class="mono">还没有收藏消息</div>';
+    favMsgsBox.innerHTML = '<div class="mono">No favorited messages yet</div>';
   }else{
     for(const rec of favMsgsArr){
       const c = conversations.find(x=>x.id===rec.convId);
-      const title = c ? (c.title||'(无标题)') : '（会话不存在）';
+      const title = c ? (c.title||'(Untitled)') : '(Conversation not found)';
       const wrap = document.createElement('div');
       wrap.className = 'fav-msg';
     wrap.innerHTML = `
       <div style="font-weight:600; margin-bottom:6px">${escapeHTML(title)}</div>
       <div class="mono" style="margin-bottom:6px">${fmtDate(rec.ts)||''} · ${(rec.role==='user'?(names.user||'User'):(names.assistant||'ChatGPT'))}</div>
       <div>${escapeHTML(rec.text.slice(0,240))}${rec.text.length>240?'…':''}</div>
-      <span class="fav active" title="取消收藏">★</span>
+      <span class="fav active" title="Remove favorite">★</span>
     `;
     wrap.querySelector('.fav').addEventListener('click', (e)=>{ e.stopPropagation(); toggleFavMsg(rec.convId, rec.idx, rec.role, rec.text, rec.ts); renderFavs(); });
       wrap.addEventListener('click', ()=>{
@@ -1080,7 +1080,7 @@ function renderList(){
     empty.className = 'mono';
     empty.style.padding = '12px';
     empty.style.color = 'var(--muted)';
-    empty.innerHTML = `未找到 “<span class="hl">${escapeHTML($('#q').value)}</span>” 相关内容`;
+    empty.innerHTML = `No results for “<span class="hl">${escapeHTML($('#q').value)}</span>”`;
     list.appendChild(empty);
     return;
   }
@@ -1092,14 +1092,14 @@ function renderList(){
     div.dataset.id = it.id;
     const isFav = favConvs.has(it.id);
     div.innerHTML = `
-      <div class="title">${escapeHTML(it.title||'(无标题)')}</div>
+      <div class="title">${escapeHTML(it.title||'(Untitled)')}</div>
       <div class="meta">
         <span class="datepill">${fmtDateOnly(it.date) || ''}</span>
-        <span class="pill">${(conv.messages||[]).length} 条消息</span>
-        ${q? `<span class="hits">出现 ${hits} 次</span>`:''}
+        <span class="pill">${(conv.messages||[]).length} messages</span>
+        ${q? `<span class="hits">${hits} matches</span>`:''}
       </div>
       ${q? `<div class="snippet">${getSnippet(it.text||'', q, 140)}</div>`:''}
-      <span class="fav ${isFav?'active':''}" title="${isFav ? '取消收藏' : '收藏会话'}">★</span>
+      <span class="fav ${isFav?'active':''}" title="${isFav ? 'Remove favorite' : 'Favorite conversation'}">★</span>
     `;
     div.addEventListener('click', ()=>{
       const currentTab = document.querySelector('.tab.active')?.id;
@@ -1129,7 +1129,7 @@ function messageDomId(convId, idx){ return `msg-${convId}-${idx}`; }
 function renderThread(conv){
   const view = $('#view');
   const q = ($('#q').value||'').trim();
-  if(!conv){ view.innerHTML='<div class="welcome">无会话</div>'; return; }
+  if(!conv){ view.innerHTML='<div class="welcome">No conversation</div>'; return; }
   const div = document.createElement('div');
   div.className = 'thread';
   (conv.messages||[]).forEach((m, i)=>{
@@ -1175,7 +1175,7 @@ function renderThread(conv){
     const star = document.createElement('span');
     star.className = 'fav' + (isActive ? ' active' : '');
     star.textContent = '★';
-    star.title = isActive ? '取消收藏' : '收藏消息';
+    star.title = isActive ? 'Remove favorite' : 'Favorite message';
     star.addEventListener('click', (e)=>{
       e.stopPropagation();
       toggleFavMsg(
@@ -1251,7 +1251,7 @@ function normalizeExport(raw){
     if(item && item.mapping){
       const msgs = [];
       const mapping = item.mapping||{};
-      
+
       function findRoot(){
         for(const key of Object.keys(mapping)){
           const node = mapping[key];
@@ -1267,13 +1267,13 @@ function normalizeExport(raw){
         }
         return Object.keys(mapping)[0];
       }
-      
+
       const visited = new Set();
       let orderIndex = 0;
       function traverse(nodeId){
         if(!nodeId || visited.has(nodeId) || !mapping[nodeId]) return;
         visited.add(nodeId);
-        
+
         const node = mapping[nodeId];
         const m = node?.message;
         if(m){
@@ -1285,22 +1285,22 @@ function normalizeExport(raw){
             msgs.push({ role, text: String(text), ts, model: (role!=='user') ? pickModel(m) : '', _order: orderIndex++ });
           }
         }
-        
+
         const children = node.children || [];
         for(const childId of children){
           traverse(childId);
         }
       }
-      
+
       const rootId = findRoot();
       traverse(rootId);
-      
+
       for(const key of Object.keys(mapping)){
         if(!visited.has(key)){
           traverse(key);
         }
       }
-      
+
       msgs.sort((a,b)=>{
         const tsDiff = (toEpochMs(a.ts)||0)-(toEpochMs(b.ts)||0);
         if(Math.abs(tsDiff) < 1000){
@@ -1308,8 +1308,8 @@ function normalizeExport(raw){
         }
         return tsDiff;
       });
-      
-      out.push({ id: item.id || cryptoRandomId(), title: item.title || '(无标题)', create_time: item.create_time, messages: msgs });
+
+      out.push({ id: item.id || cryptoRandomId(), title: item.title || '(Untitled)', create_time: item.create_time, messages: msgs });
       continue;
     }
     if(item && Array.isArray(item.messages)){
@@ -1320,12 +1320,12 @@ function normalizeExport(raw){
         const model = (role!=='user') ? (m?.metadata?.model_slug || m?.metadata?.model || m?.model || m?.model_slug || m?.model_id || '') : '';
         return { role, text:String(text||''), ts, model };
       }).filter(m=>m.text);
-      out.push({ id: item.id || cryptoRandomId(), title: item.title || '(无标题)', create_time: item.create_time, messages: msgs });
+      out.push({ id: item.id || cryptoRandomId(), title: item.title || '(Untitled)', create_time: item.create_time, messages: msgs });
       continue;
     }
     const text = normalizeParts(item?.content)||'';
     if(text){
-      out.push({ id: cryptoRandomId(), title: item.title || '(无标题)', create_time: item.create_time, messages: [{role:'assistant', text, ts:item.create_time}] });
+      out.push({ id: cryptoRandomId(), title: item.title || '(Untitled)', create_time: item.create_time, messages: [{role:'assistant', text, ts:item.create_time}] });
     }
   }
   return out;
@@ -1427,17 +1427,17 @@ if(nextHitBtn) nextHitBtn.addEventListener('click', ()=> nextHitNav(+1));
 let searchTimeout = null;
 qInput.addEventListener('input', () => {
     if (searchTimeout) clearTimeout(searchTimeout);
-  
+
     searchTimeout = setTimeout(() => {
-        renderList(); 
-        if(selectedId){ 
-            const c=conversations.find(x=>x.id===selectedId); 
+        renderList();
+        if(selectedId){
+            const c=conversations.find(x=>x.id===selectedId);
             if(c) renderThread(c);
-        } 
-        buildSearchNodes(); 
-        updateSearchButtons(); 
+        }
+        buildSearchNodes();
+        updateSearchButtons();
         hideNamesBox();
-    }, 300); 
+    }, 300);
 });
 qInput.addEventListener('keydown', (e)=>{
   if(e.key==='Enter'){
@@ -1445,17 +1445,17 @@ qInput.addEventListener('keydown', (e)=>{
     const searchTerm = (qInput.value||'').trim();
     if(searchTerm){
       setTab('browse');
-      
+
       document.body.classList.remove('sidebar-collapsed');
-      
+
       setTimeout(()=> {
-        const items = index.filter(it => 
+        const items = index.filter(it =>
           textMatches(it.title, searchTerm) || textMatches(it.text||'', searchTerm)
         );
-        
+
         if(items.length > 0){
           selectConv(items[0].id, { forceRender: true });
-          
+
           setTimeout(()=> {
             const selectedEl = document.querySelector('.conv.selected');
             if(selectedEl){
@@ -1464,10 +1464,10 @@ qInput.addEventListener('keydown', (e)=>{
           }, 100);
         }
         const cloud = document.getElementById('wf-cloud');
-        if (cloud && cloud.innerHTML && !/Computing|计算中/.test(cloud.innerHTML)) {
+        if (cloud && cloud.innerHTML && !/Computing/.test(cloud.innerHTML)) {
           const scopeSel = document.getElementById('wf-scope');
           if (scopeSel && scopeSel.value === 'all') {
-            cloud.innerHTML = '<div class="mono">条件已更改，点击「生成词频」重新计算</div>';
+            cloud.innerHTML = '<div class="mono">Conditions changed. Click "Generate frequencies" to recalculate.</div>';
             const result = document.getElementById('wf-result');
             if (result) result.textContent = '';
           }
@@ -1537,7 +1537,7 @@ viewEl.addEventListener('scroll', ()=>{
     '那种','这些','完全','出来','他们','我不','第一','哪怕','那个','一样','一边','一步','给我','那一',
     '我可','变成','甚至','不需','一种','之间','你已','你会','那我','句话','下来','们可','你只','这里',
     '你已经','为什','我现','之后','之前','一些','目前','可不可','来说','那你','抱一','同一','会让','们的故事'
-  ]); 
+  ]);
 
   function hasHan(s){ return /[\p{Script=Han}]/u.test(s); }
 
@@ -1545,7 +1545,7 @@ viewEl.addEventListener('scroll', ()=>{
     const words = (text || '').toLowerCase().match(/\b[a-z0-9]+(?:[-'][a-z0-9]+)*\b/g) || [];
     return words.filter(w => !STOP_EN.has(w));
   }
- 
+
   function buildStopSet(langMode) {
     const base = new Set();
     if (langMode === 'zh') {
@@ -1575,7 +1575,7 @@ viewEl.addEventListener('scroll', ()=>{
     }
     return segs;
   }
-  // === 中文 n-gram 统计 + PMI 工具 ===
+  // === Chinese n-gram 统计 + PMI 工具 ===
   function zhBuildCounts(texts){
     const uni = new Map(), bi = new Map(), tri = new Map(), quad = new Map();
     let N = 0;
@@ -1616,7 +1616,7 @@ viewEl.addEventListener('scroll', ()=>{
     return minv;
   }
 
-  // 基于 PMI 的候选词表（返回 2~4 字串的集合）
+  // 基于 PMI 的候选Word表（返回 2~4 字串的集合）
   function tokenizeZH_withPMI(allTexts, stopSet){
     const counts = zhBuildCounts(allTexts);
     const MIN_FREQ = 3;
@@ -1724,7 +1724,7 @@ for(const w of toDelete) strong.delete(w);
       for (const m of (msgs||[])){
         if (!incUser.checked && m.role === 'user') continue;
         if (!incAsst.checked && m.role !== 'user') continue;
-        if (q && !textMatches(m.text || '', q)) continue; 
+        if (q && !textMatches(m.text || '', q)) continue;
         texts.push(m.text || '');
       }
     };
@@ -1824,7 +1824,7 @@ for(const w of toDelete) strong.delete(w);
 
   function renderCloud(pairs){
     cloud.innerHTML = '';
-    if (!pairs.length){ cloud.innerHTML = '<div class="mono">内容不足，无法进行分析</div>'; return; }
+    if (!pairs.length){ cloud.innerHTML = '<div class="mono">Not enough content to analyze</div>'; return; }
     const max = pairs[0][1], min = pairs[pairs.length-1][1];
     const span = (max===min) ? 1 : (max-min);
     for (const [w, n] of pairs){
@@ -1847,25 +1847,25 @@ for(const w of toDelete) strong.delete(w);
 
   function renderTable(pairs){
     if (!pairs.length){
-      result.innerHTML = '选择范围（若选「当前会话」，请在侧边栏点选会话）与数量，然后点击「生成词频」。';
+      result.innerHTML = 'Choose scope (if "Current conversation", please select a conversation in the sidebar) and count, then click "Generate frequencies".';
       return;
     }
     const rows = pairs.map(([w,n])=> `<tr><td style="padding:4px 8px;border-bottom:1px solid var(--border)">${w}</td><td style="text-align:right;padding:4px 8px;border-bottom:1px solid var(--border)">${n}</td></tr>`).join('');
     result.innerHTML = `
-      <div class="mono" style="margin:6px 0">共 ${pairs.reduce((s,[,n])=>s+n,0)} 次出现 · 展示 Top ${pairs.length}</div>
+      <div class="mono" style="margin:6px 0">Total ${pairs.reduce((s,[,n])=>s+n,0)} occurrences · Top ${pairs.length}</div>
       <table style="width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:8px;overflow:hidden">
-        <thead><tr><th style="text-align:left;padding:6px 8px;background:var(--chip)">词</th><th style="text-align:right;padding:6px 8px;background:var(--chip)">次数</th></tr></thead>
+        <thead><tr><th style="text-align:left;padding:6px 8px;background:var(--chip)">Word</th><th style="text-align:right;padding:6px 8px;background:var(--chip)">Count</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
   }
 
   function run(){
   runBtn.disabled = true;
-  runBtn.textContent = '计算中...';
-  
-  cloud.innerHTML = '<div class="mono">计算中...</div>';
+  runBtn.textContent = 'Computing...';
+
+  cloud.innerHTML = '<div class="mono">Computing...</div>';
   result.textContent = '';
-  
+
   setTimeout(() => {
     try {
       const texts = getSelectedTexts();
@@ -1875,12 +1875,12 @@ for(const w of toDelete) strong.delete(w);
       renderCloud(pairs);
       renderTable(pairs);
     } catch (error) {
-      console.error('词频计算错误：', error);
-      cloud.innerHTML = '<div class="mono">计算出错</div>';
-      result.textContent = '错误：' + error.message;
+      console.error('Word frequency calculation error: ', error);
+      cloud.innerHTML = '<div class="mono">Calculation error</div>';
+      result.textContent = 'Error: ' + error.message;
     } finally {
       runBtn.disabled = false;
-      runBtn.textContent = '生成词频';
+      runBtn.textContent = 'Generate frequencies';
     }
   }, 10);
 }
@@ -1890,16 +1890,16 @@ for(const w of toDelete) strong.delete(w);
   [scopeSel, kSel, incUser, incAsst, langSel].forEach(element => {
   if (element) {
     element.addEventListener('change', () => {
-      if (cloud.innerHTML && !cloud.innerHTML.includes('计算中')) {
-        cloud.innerHTML = '<div class="mono">条件已更改，点击「生成词频」重新计算</div>';
+      if (cloud.innerHTML && !cloud.innerHTML.includes('Computing')) {
+        cloud.innerHTML = '<div class="mono">Conditions changed. Click "Generate frequencies" to recalculate.</div>';
       }
     });
   }
 });
 
 window.addEventListener('selectedConvChanged', () => {
-  if (scopeSel.value === 'current' && cloud.innerHTML && !cloud.innerHTML.includes('计算中')) {
-    cloud.innerHTML = '<div class="mono">当前会话已更改，点击「生成词频」重新计算</div>';
+  if (scopeSel.value === 'current' && cloud.innerHTML && !cloud.innerHTML.includes('Computing')) {
+    cloud.innerHTML = '<div class="mono">Current conversation changed. Click "Generate frequencies" to recalculate.</div>';
   }
 });
 
